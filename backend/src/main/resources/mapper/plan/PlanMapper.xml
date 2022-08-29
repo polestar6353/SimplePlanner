@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.planner.plan.mapper.PlanMapper">
+
+  <select id="readDetail" resultType="Plan">
+    SELECT * FROM plan 
+    WHERE planId=#{planId}
+  </select>
+  
+  <select id="searchPlanList" resultType="Plan">
+  	SELECT * FROM plan 
+  	WHERE date IS NOT NULL
+  </select>
+  
+  <insert id="createPlan">
+	INSERT INTO plan 
+	  (date, title, content, color) 
+	VALUES 
+	  (#{date}, #{title}, #{content}, #{color})
+  </insert>
+
+  <update id="updatePlan">
+  	UPDATE plan SET 
+  	  date = #{date},
+  	  title = #{title}, 
+  	  content = #{content}, 
+  	  color = #{color}
+  	  WHERE planId = #{planId}
+  </update>
+  
+  <delete id="deletePlan">
+  	DELETE FROM plan 
+  	  WHERE planId = #{planId}
+  </delete>
+	  
+  <insert id="quickCreatePlan">
+  	INSERT INTO plan 
+  	  (title, content, color) 
+  	VALUES 
+  	  (#{title}, #{content}, #{color})
+  </insert>
+	
+  <select id="searchQuickPlanList" resultType="Plan">
+    SELECT * FROM plan 
+  	WHERE date IS NULL
+  </select>
+	
+  <select id="searchMobilePlanList" resultType="Plan">
+	SELECT * FROM plan 
+	WHERE date>current_date()
+	ORDER BY date ASC
+  </select>
+</mapper>
